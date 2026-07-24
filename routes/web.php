@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/',\App\Http\Controllers\HomeController::class);
 
 Route::get('belajar-laravel', [App\Http\Controllers\BelajarController::class, 'index']);
 Route::get('penjumlahan', [App\Http\Controllers\BelajarController::class, 'penjumlahan'])->name('penjumlahan');
@@ -15,3 +13,11 @@ Route::get('perkalian', [App\Http\Controllers\BelajarController::class, 'kali'])
 Route::post('store-kali', [\App\Http\Controllers\BelajarController::class, 'storeKali'])->name('store-kali');
 Route::get('pembagian', [App\Http\Controllers\BelajarController::class, 'bagi'])->name('pembagian');
 Route::post('store-bagi', [\App\Http\Controllers\BelajarController::class, 'storeBagi'])->name('store-bagi');
+
+Route::get('login', [\App\Http\Controllers\LoginController::class, 'login']);
+Route::post('action-login', [\App\Http\Controllers\LoginController::class, 'actionLogin'])->name('action-login');
+Route::prefix('admin')->group(function(){
+    Route::resource('/dashboard', \App\Http\Controllers\DashboardController::class);
+    });
+
+
