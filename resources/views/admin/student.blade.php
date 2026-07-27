@@ -28,8 +28,6 @@
 </style>
 
 <div class="container-fluid">
-
-    <!-- Header Section -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Student Management</h1>
         <button class="btn btn-primary btn-icon-split shadow-sm" data-toggle="modal" data-target="#AddPart">
@@ -39,8 +37,6 @@
             <span class="text">Tambah Data Student</span>
         </button>
     </div>
-
-    <!-- Student Table Card -->
     <div class="card shadow-sm custom-card mb-4">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -72,8 +68,6 @@
                                     </a>
                                 </td>
                             </tr>
-
-                            <!-- Modal Edit Data -->
                             <div class="modal fade" id="EditPart{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content custom-card shadow-lg">
@@ -121,8 +115,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Add Data -->
     <div class="modal fade" id="AddPart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-card shadow-lg">
@@ -163,18 +155,13 @@
 
     <hr class="my-5">
 
-    <!-- Dashboard Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
         </a>
     </div>
-
-    <!-- Content Row - Stat Cards -->
     <div class="row">
-
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
@@ -192,8 +179,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
@@ -211,8 +196,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
@@ -239,8 +222,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Pending Requests Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
@@ -260,10 +241,8 @@
         </div>
     </div>
 
-    <!-- Content Row - Charts -->
     <div class="row">
 
-        <!-- Area Chart -->
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -289,7 +268,6 @@
             </div>
         </div>
 
-        <!-- Pie Chart -->
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -321,7 +299,6 @@
         </div>
     </div>
 
-    <!-- Content Row - Projects & System Info -->
     <div class="row">
         <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
@@ -352,7 +329,6 @@
                 </div>
             </div>
 
-            <!-- Color System -->
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="card bg-primary text-white shadow">
@@ -398,7 +374,6 @@
         </div>
 
         <div class="col-lg-6 mb-4">
-            <!-- Illustrations -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
@@ -412,7 +387,6 @@
                 </div>
             </div>
 
-            <!-- Approach -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>

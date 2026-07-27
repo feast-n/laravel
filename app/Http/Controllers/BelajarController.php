@@ -25,7 +25,7 @@ class BelajarController extends Controller
         $angka2 = $request->input('angka2');
 
         $jumlah = $angka1 + $angka2;
-        $title = "Data Penjumlahan"; // Tambahkan $title di sini
+        $title = "Data Penjumlahan";
 
         return view('tambah', compact('jumlah', 'title'));
     }
@@ -44,7 +44,7 @@ class BelajarController extends Controller
 
         $jumlah = ($angka1 - $angka2);
         // $jumlah = max(0, $angka1 - $angka2);
-        $title = "Data Pengurangan"; // Tambahkan $title di sini
+        $title = "Data Pengurangan";
 
         return view('kurang', compact('jumlah', 'title'));
     }

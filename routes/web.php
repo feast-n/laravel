@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BelajarController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController; // Imported RegisterController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\StudentController;
 
@@ -22,8 +23,10 @@ Route::get('pembagian', [BelajarController::class, 'bagi'])->name('pembagian');
 Route::post('store-bagi', [BelajarController::class, 'storeBagi'])->name('store-bagi');
 
 // Auth Routes
-Route::get('login', [LoginController::class, 'login']);
+Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('action-login', [LoginController::class, 'actionLogin'])->name('action-login');
+Route::get('register', [RegisterController::class, 'register'])->name('register');
+Route::post('action-register', [RegisterController::class, 'actionRegister'])->name('action-register');
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -35,3 +38,20 @@ Route::get('/student', [StudentController::class, 'index'])->name('student');
 Route::post('/student/tambah', [StudentController::class, 'store'])->name('student.store');
 Route::post('/student/update/{id}', [StudentController::class, 'update'])->name('student.update');
 Route::get('/student/hapus/{id}', [StudentController::class, 'hapus'])->name('student.hapus');
+
+// Logout Route
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Register Routes
+Route::get('register', [RegisterController::class, 'register'])->name('register');
+Route::post('action-register', [RegisterController::class, 'actionRegister'])->name('action-register');
+
+//Admin
+route::middleware('auth')->group(function(){
+    //dashboard
+    route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    route::get('admin/student', [StudentController::class, 'index'])->name('student');
+    route::post('admin/student/simpan', [StudentController::class, 'simpan']);
+    route::post('admin/student/update/{id}', [StudentController::class, 'update']);
+    route::get('admin/student/hapus/{id}', [StudentController::class, 'hapus']);
+});
