@@ -355,7 +355,7 @@
         </div>
     		<div class="row">
     			<div class="col-md-4">
-    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url({{ asset('assets/images/project-4.jp') }}g);">
+    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url({{ asset('assets/images/project-4.jpg') }});">
     					<div class="overlay"></div>
 	    				<div class="text text-center p-4">
 	    					<h3><a href="#">Branding &amp; Illustration Design</a></h3>
@@ -427,57 +427,28 @@
           </div>
         </div>
         <div class="row d-flex">
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="{{ asset('assets/single.html') }}" class="block-20" style="background-image: url('{{ asset('assets/images/image_1.jpg') }}');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-              	<div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">June 21, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
+          @forelse ($blogs as $blog)
+            <div class="col-md-4 d-flex ftco-animate">
+              <div class="blog-entry justify-content-end">
+                <a href="#" class="block-20" style="background-image: url('{{ asset('assets/images/image_1.jpg') }}');">
+                </a>
+                <div class="text mt-3 float-right d-block">
+                  <div class="d-flex align-items-center mb-3 meta">
+                    <p class="mb-0">
+                      <span class="mr-2">{{ \Carbon\Carbon::parse($blog->date)->format('M d, Y') }}</span>
+                      <a href="#" class="mr-2">Admin</a>
+                    </p>
+                  </div>
+                  <h3 class="heading"><a href="#">{{ $blog->title }}</a></h3>
+                  <p>{{ $blog->sub_content }}</p>
                 </div>
-                <h3 class="heading"><a href="{{ asset('assets/single.html') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
               </div>
             </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="{{ asset('assets/single.html') }}" class="block-20" style="background-image: url('{{ asset('assets/images/image_2.jpg') }}');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-              	<div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">June 21, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
-                </div>
-                <h3 class="heading"><a href="{{ asset('assets/single.html') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              </div>
+          @empty
+            <div class="col-md-12 text-center">
+              <p class="text-muted">Belum ada artikel blog.</p>
             </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="{{ asset('assets/single.html') }}" class="block-20" style="background-image: url('{{ asset('assets/images/image_3.jpg') }}');">
-              </a>
-              <div class="text mt-3 float-right d-block">
-              	<div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">June 21, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
-                </div>
-                <h3 class="heading"><a href="{{ asset('assets/single.html') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              </div>
-            </div>
-          </div>
+          @endforelse
         </div>
       </div>
     </section>
@@ -543,6 +514,19 @@
           </div>
         </div>
 
+        @if(session('success'))
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="row d-flex contact-info mb-5">
           <div class="col-md-6 col-lg-3 d-flex ftco-animate">
           	<div class="align-self-stretch box p-4 text-center">
@@ -584,22 +568,23 @@
 
         <div class="row no-gutters block-9">
           <div class="col-md-6 order-md-last d-flex">
-            <form action="#" class="bg-light p-4 p-md-5 contact-form">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
-              </div>
-              <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-              </div>
-              <div class="form-group">
+            <form action="{{ route('contact.store') }}" method="POST" class="bg-dark p-4 p-md-5 contact-form">
+            @csrf
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+            </div>
+            <div class="form-group">
+                <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message" required></textarea>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-              </div>
+            </div>
             </form>
 
           </div>
@@ -683,9 +668,9 @@
   <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery-migrate-3.0.1.min.js') }}"></script>
   <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-  <script src="{{ asset('assets/js/bootstrap.min.') }}js"></script>
+  <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.easing.1.3.js') }}"></script>
-  <script src="{{ asset('assets/js/jquery.waypoints.min.j') }}s"></script>
+  <script src="{{ asset('assets/js/jquery.waypoints.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.stellar.min.js') }}"></script>
   <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>

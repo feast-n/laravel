@@ -37,9 +37,15 @@ Route::post('action-reset-password', [ForgotPasswordController::class, 'actionRe
 
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+// Route publik untuk pengunjung mengirim form contact
+Route::post('contact-store', [\App\Http\Controllers\Admin\ContactController::class, 'store'])->name('contact.store');
+
 // --- PROTECTED ADMIN ROUTES ---
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('/contact', \App\Http\Controllers\Admin\ContactController::class);
+    Route::resource('/blog', \App\Http\Controllers\Admin\BlogController::class);
+
 
     // Student Routes
     Route::get('/student', [StudentController::class, 'index'])->name('student');

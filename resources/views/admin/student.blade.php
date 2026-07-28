@@ -1,4 +1,4 @@
-@extends('template.admin_template')
+@extends('layouts.admin_template')
 
 @section('title', $title ?? 'Student Management')
 
