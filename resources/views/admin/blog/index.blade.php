@@ -36,6 +36,12 @@
         padding: 0.35em 0.8em;
         border-radius: 50rem;
     }
+    .img-preview-table {
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
 </style>
 
 <div class="container-fluid">
@@ -65,10 +71,11 @@
                     <thead class="bg-light">
                         <tr>
                             <th class="py-3 px-3 text-center" style="width: 5%;">NO</th>
-                            <th class="py-3 px-3" style="width: 22%;">TITLE</th>
-                            <th class="py-3 px-3" style="width: 20%;">SUB CONTENT</th>
-                            <th class="py-3 px-3" style="width: 23%;">CONTENT</th>
-                            <th class="py-3 px-3 text-center text-nowrap" style="width: 12%;">DATE</th>
+                            <th class="py-3 px-3 text-center" style="width: 8%;">IMAGE</th>
+                            <th class="py-3 px-3" style="width: 20%;">TITLE</th>
+                            <th class="py-3 px-3" style="width: 18%;">SUB CONTENT</th>
+                            <th class="py-3 px-3" style="width: 20%;">CONTENT</th>
+                            <th class="py-3 px-3 text-center text-nowrap" style="width: 11%;">DATE</th>
                             <th class="py-3 px-3 text-center" style="width: 8%;">STATUS</th>
                             <th class="py-3 px-3 text-center text-nowrap" style="width: 10%;">ACTION</th>
                         </tr>
@@ -77,6 +84,13 @@
                         @forelse ($blogs as $item)
                             <tr>
                                 <td class="py-3 px-3 text-center text-muted font-weight-bold">{{ $loop->iteration }}</td>
+                                <td class="py-3 px-3 text-center">
+                                    @if($item->image)
+                                        <img src="{{ asset('storage/' . $item->image) }}" class="img-preview-table shadow-sm border" alt="Blog Image">
+                                    @else
+                                        <span class="badge badge-light border text-muted">No Image</span>
+                                    @endif
+                                </td>
                                 <td class="py-3 px-3 font-weight-bold text-primary">{{ $item->title }}</td>
                                 <td class="py-3 px-3 text-muted">{{ Str::limit($item->sub_content, 35, '...') }}</td>
                                 <td class="py-3 px-3 text-muted">{{ Str::limit($item->content, 45, '...') }}</td>
@@ -108,7 +122,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-muted">Belum ada data blog.</td>
+                                <td colspan="8" class="text-center py-4 text-muted">Belum ada data blog.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -122,7 +136,7 @@
 <div class="modal fade" id="AddBlogModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content custom-card shadow-lg">
-            <form action="{{ route('blog.store') }}" method="POST">
+            <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title font-weight-bold" id="addModalLabel">Tambah Data Blog</h5>
@@ -142,6 +156,11 @@
                     <div class="form-group mb-3">
                         <label for="content" class="font-weight-bold small text-uppercase text-muted">Content</label>
                         <textarea class="form-control" id="content" name="content" rows="4" placeholder="Isi konten artikel blog..." required></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="image" class="font-weight-bold small text-uppercase text-muted">Blog Image</label>
+                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+                        <small class="form-text text-muted">Format: JPG, PNG, WEBP (Max 2MB)</small>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6 mb-3">
@@ -171,7 +190,7 @@
     <div class="modal fade" id="EditBlogModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content custom-card shadow-lg">
-                <form action="{{ route('blog.update', $item->id) }}" method="POST">
+                <form action="{{ route('blog.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-warning text-white">
@@ -192,6 +211,16 @@
                         <div class="form-group mb-3">
                             <label for="content_{{ $item->id }}" class="font-weight-bold small text-uppercase text-muted">Content</label>
                             <textarea class="form-control" id="content_{{ $item->id }}" name="content" rows="4" required>{{ $item->content }}</textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="image_{{ $item->id }}" class="font-weight-bold small text-uppercase text-muted">Change Image</label>
+                            @if($item->image)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/blogs/' . $item->image) }}" class="rounded border" style="max-height: 80px; width: 120px; object-fit: cover;" alt="Current Image">
+                                </div>
+                            @endif
+                            <input type="file" class="form-control-file" id="image_{{ $item->id }}" name="image" accept="image/*">
+                            <small class="form-text text-muted">Leave empty if you don't want to change the image.</small>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6 mb-3">

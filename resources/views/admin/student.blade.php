@@ -53,6 +53,7 @@
                 <table class="table table-hover align-middle custom-table" id="student">
                     <thead class="bg-light text-muted text-uppercase small">
                         <tr>
+                            <th class="py-3 px-4">No</th>
                             <th class="py-3 px-4">Name</th>
                             <th class="py-3 px-4">Email</th>
                             <th class="py-3 px-4">Phone</th>
@@ -63,6 +64,7 @@
                     <tbody class="text-dark">
                         @forelse ($students as $item)
                             <tr>
+                                <td class="py-3 px-4">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-4 font-weight-bold text-primary">{{ $item->name }}</td>
                                 <td class="py-3 px-4">{{ $item->email }}</td>
                                 <td class="py-3 px-4">
@@ -119,11 +121,14 @@
                             </div>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">Belum ada data student.</td>
+                                <td colspan="6" class="text-center py-4 text-muted">Belum ada data student.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+                <div class="mt-3">
+                    {{ $students->links() }}
+                </div>
             </div>
         </div>
     </div>

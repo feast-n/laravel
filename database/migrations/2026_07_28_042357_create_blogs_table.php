@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('sub_content')->nullable();
             $table->text('content');
             $table->date('date');
+            $table->string('image')->nullable();
             $table->boolean('is_active')->nullable()->default(1);
             $table->timestamps();
         });
