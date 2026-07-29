@@ -12,7 +12,8 @@ class StudentController extends Controller
     {
         $students = Student::paginate(5);
         $title = "Student Table";
-        return view('admin.student', compact('title', 'students'));
+        $students = Student::paginate(5)->onEachSide(1);
+        return view('admin.student', compact('title', 'students'));   
     }
 
     public function store(Request $request)

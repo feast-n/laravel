@@ -25,6 +25,40 @@
         background-color: rgba(78, 115, 223, 0.04) !important;
         transition: background-color 0.2s ease;
     }
+
+    /* Custom Compact Pagination Styling */
+    .custom-pagination-container {
+        padding: 1rem 1.5rem;
+        background-color: #fff;
+        border-top: 1px solid #e3e6f0;
+    }
+    .compact-pagination .pagination {
+        margin-bottom: 0 !important;
+        gap: 4px;
+    }
+    .compact-pagination .page-item .page-link {
+        border-radius: 6px !important;
+        border: 1px solid #e3e6f0 !important;
+        color: #4e73df !important;
+        font-weight: 600;
+        padding: 0.4rem 0.85rem;
+        transition: all 0.2s ease-in-out;
+    }
+    .compact-pagination .page-item.active .page-link {
+        background-color: #4e73df !important;
+        border-color: #4e73df !important;
+        color: #fff !important;
+        box-shadow: 0 2px 4px rgba(78, 115, 223, 0.25);
+    }
+    .compact-pagination .page-item .page-link:hover {
+        background-color: #eaecf4 !important;
+        border-color: #dddfeb !important;
+    }
+    .compact-pagination .page-item.disabled .page-link {
+        color: #858796 !important;
+        background-color: #f8f9fc !important;
+        border-color: #e3e6f0 !important;
+    }
 </style>
 
 <div class="container-fluid">
@@ -126,9 +160,66 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div class="mt-3">
-                    {{ $students->links() }}
-                </div>
+            </div>
+            
+            <!-- Compact Pagination Footer with First & Last Page Links -->
+            <div class="custom-pagination-container d-flex flex-column flex-sm-row align-items-center justify-content-between">
+                <small class="text-muted font-weight-bold mb-2 mb-sm-0">
+                    Showing {{ $students->firstItem() ?? 0 }} to {{ $students->lastItem() ?? 0 }} of {{ $students->total() }} entries
+                </small>
+                
+                @if ($students->hasPages())
+                    @php
+                        $currentPage = $students->currentPage();
+                        $lastPage = $students->lastPage();
+                        
+                        $startPage = max(1, $currentPage - 1);
+                        $endPage = min($lastPage, $currentPage + 1);
+                    @endphp
+
+                    <div class="compact-pagination">
+                        <ul class="pagination">
+                            {{-- Previous Page Link (<) --}}
+                            @if ($students->onFirstPage())
+                                <li class="page-item disabled"><span class="page-link">&lsaquo;</span></li>
+                            @else
+                                <li class="page-item"><a class="page-link" href="{{ $students->previousPageUrl() }}" rel="prev">&lsaquo;</a></li>
+                            @endif
+
+                            {{-- Always Show First Page (1) if current range doesn't include page 1 --}}
+                            @if ($startPage > 1)
+                                <li class="page-item"><a class="page-link" href="{{ $students->url(1) }}">1</a></li>
+                                @if ($startPage > 2)
+                                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                                @endif
+                            @endif
+
+                            {{-- Active Range: x-1, x, x+1 --}}
+                            @for ($page = $startPage; $page <= $endPage; $page++)
+                                @if ($page == $currentPage)
+                                    <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
+                                @else
+                                    <li class="page-item"><a class="page-link" href="{{ $students->url($page) }}">{{ $page }}</a></li>
+                                @endif
+                            @endfor
+
+                            {{-- Always Show Last Page if current range doesn't reach the last page --}}
+                            @if ($endPage < $lastPage)
+                                @if ($endPage < $lastPage - 1)
+                                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                                @endif
+                                <li class="page-item"><a class="page-link" href="{{ $students->url($lastPage) }}">{{ $lastPage }}</a></li>
+                            @endif
+
+                            {{-- Next Page Link (>) --}}
+                            @if ($students->hasMorePages())
+                                <li class="page-item"><a class="page-link" href="{{ $students->nextPageUrl() }}" rel="next">&rsaquo;</a></li>
+                            @else
+                                <li class="page-item disabled"><span class="page-link">&rsaquo;</span></li>
+                            @endif
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
