@@ -430,7 +430,7 @@
           @forelse ($blogs as $blog)
             <div class="col-md-4 d-flex ftco-animate">
               <div class="blog-entry justify-content-end">
-                <a href="#" class="block-20" style="background-image: url('{{ $blog->image ? asset('storage/' . $blog->image) : asset('assets/images/image_1.jpg') }}');">
+                <a href="{{ route('home.blog.detail', $blog) }}" class="block-20" style="background-image: url('{{ $blog->image ? asset('storage/' . $blog->image) : asset('assets/images/image_1.jpg') }}');">
                 </a>
                 <div class="text mt-3 float-right d-block">
                   <div class="d-flex align-items-center mb-3 meta">

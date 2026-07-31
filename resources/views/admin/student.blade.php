@@ -98,7 +98,7 @@
                     <tbody class="text-dark">
                         @forelse ($students as $item)
                             <tr>
-                                <td class="py-3 px-4">{{ $loop->iteration }}</td>
+                                <td class="py-3 px-4">{{ ($students->currentPage()-1) * $students->perPage() + $loop->iteration }}</td>
                                 <td class="py-3 px-4 font-weight-bold text-primary">{{ $item->name }}</td>
                                 <td class="py-3 px-4">{{ $item->email }}</td>
                                 <td class="py-3 px-4">
@@ -106,7 +106,7 @@
                                 </td>
                                 <td class="py-3 px-4 text-muted">{{ $item->address }}</td>
                                 <td class="py-3 px-4 text-center">
-                                    <a class="btn btn-sm btn-outline-warning border-0 me-1" data-toggle="modal" data-target="#EditPart{{ $item->id }}" title="Edit">
+                                    <a class="btn btn-sm btn-outline-warning border-0 mr-1" data-toggle="modal" data-target="#EditPart{{ $item->id }}" title="Edit">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
                                     <a class="btn btn-sm btn-outline-danger border-0" href="{{ url('admin/student/hapus/' . $item->id ) }}" onclick="return confirm('Data akan dihapus?')" title="Hapus">
@@ -161,18 +161,18 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- Compact Pagination Footer with First & Last Page Links -->
             <div class="custom-pagination-container d-flex flex-column flex-sm-row align-items-center justify-content-between">
                 <small class="text-muted font-weight-bold mb-2 mb-sm-0">
                     Showing {{ $students->firstItem() ?? 0 }} to {{ $students->lastItem() ?? 0 }} of {{ $students->total() }} entries
                 </small>
-                
+
                 @if ($students->hasPages())
                     @php
                         $currentPage = $students->currentPage();
                         $lastPage = $students->lastPage();
-                        
+
                         $startPage = max(1, $currentPage - 1);
                         $endPage = min($lastPage, $currentPage + 1);
                     @endphp

@@ -7,13 +7,31 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Dashboard</h1>
+        @if(session('role') === 'admin' || session('role') === 'manager')
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
         </a>
+        @endif
     </div>
+
+    @if(session('role') === 'admin')
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <a href="{{ route('student') }}" class="text-decoration-none">
+                <div class="card text-white text-center bg-primary pt-3 mb-3 shadow">
+                    <i class="fa-solid fa-user-graduate fa-3x"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Student Management</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    @endif
 
     <!-- Content Row - Cards Summary -->
     <div class="row">
+        @if(session('role') === 'admin')
         <!-- Earnings (Monthly) Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -51,6 +69,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <!-- Tasks Progress Card -->
         <div class="col-xl-3 col-md-6 mb-4">
@@ -119,10 +138,12 @@
                     <div class="progress mb-4">
                         <div class="progress-bar" role="progressbar" style="width: 60%"></div>
                     </div>
+                    @if(session('role') === 'admin')
                     <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
                     <div class="progress mb-4">
                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%"></div>
                     </div>
+                    @endif
                     <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
                     <div class="progress">
                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
@@ -138,7 +159,12 @@
                     <h6 class="m-0 font-weight-bold text-primary">System Approach</h6>
                 </div>
                 <div class="card-body">
-                    <p>Selamat datang di Panel Admin. Anda dapat mengelola data student, melihat ringkasan performa sistem, serta mengatur alur kerja aplikasi secara langsung melalui navbar di atas.</p>
+                    <p>Selamat datang di Panel Admin, <strong>{{ session('name') ?? 'User' }}</strong>.</p>
+                    @if(session('role') === 'admin')
+                        <p>Anda memiliki akses penuh untuk mengelola data student, melihat ringkasan performa sistem, serta mengatur alur kerja aplikasi secara langsung melalui navbar di atas.</p>
+                    @else
+                        <p>Anda memiliki akses terbatas untuk melihat ringkasan tugas dan status permintaan sistem.</p>
+                    @endif
                 </div>
             </div>
         </div>
