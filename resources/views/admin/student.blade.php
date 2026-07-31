@@ -81,6 +81,35 @@
         </div>
     @endif
 
+    <!-- Card Filter & Search -->
+    <div class="card shadow-sm custom-card mb-4">
+        <div class="card-body p-3 bg-light">
+            <form action="{{ url('admin/student') }}" method="GET">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-2 mb-md-0">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-right-0"><i class="fas fa-search text-muted"></i></span>
+                            </div>
+                            <input type="text" name="search" class="form-control border-left-0" placeholder="Cari nama, email, telepon, atau alamat..." value="{{ request('search') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-secondary mr-2">
+                            <i class="fas fa-filter fa-sm"></i> Filter
+                        </button>
+                        @if(request('search'))
+                            <a href="{{ url('admin/student') }}" class="btn btn-outline-danger">
+                                <i class="fas fa-undo fa-sm"></i> Reset
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Table Student -->
     <div class="card shadow-sm custom-card mb-4">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -155,14 +184,14 @@
                             </div>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">Belum ada data student.</td>
+                                <td colspan="6" class="text-center py-4 text-muted">Data student tidak ditemukan.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
 
-            <!-- Compact Pagination Footer with First & Last Page Links -->
+            <!-- Compact Pagination Footer with Query Preserved -->
             <div class="custom-pagination-container d-flex flex-column flex-sm-row align-items-center justify-content-between">
                 <small class="text-muted font-weight-bold mb-2 mb-sm-0">
                     Showing {{ $students->firstItem() ?? 0 }} to {{ $students->lastItem() ?? 0 }} of {{ $students->total() }} entries
@@ -179,41 +208,41 @@
 
                     <div class="compact-pagination">
                         <ul class="pagination">
-                            {{-- Previous Page Link (<) --}}
+                            {{-- Previous Page Link --}}
                             @if ($students->onFirstPage())
                                 <li class="page-item disabled"><span class="page-link">&lsaquo;</span></li>
                             @else
-                                <li class="page-item"><a class="page-link" href="{{ $students->previousPageUrl() }}" rel="prev">&lsaquo;</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ $students->appends(request()->query())->previousPageUrl() }}" rel="prev">&lsaquo;</a></li>
                             @endif
 
-                            {{-- Always Show First Page (1) if current range doesn't include page 1 --}}
+                            {{-- First Page --}}
                             @if ($startPage > 1)
-                                <li class="page-item"><a class="page-link" href="{{ $students->url(1) }}">1</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ $students->appends(request()->query())->url(1) }}">1</a></li>
                                 @if ($startPage > 2)
                                     <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
                                 @endif
                             @endif
 
-                            {{-- Active Range: x-1, x, x+1 --}}
+                            {{-- Active Range --}}
                             @for ($page = $startPage; $page <= $endPage; $page++)
                                 @if ($page == $currentPage)
                                     <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
                                 @else
-                                    <li class="page-item"><a class="page-link" href="{{ $students->url($page) }}">{{ $page }}</a></li>
+                                    <li class="page-item"><a class="page-link" href="{{ $students->appends(request()->query())->url($page) }}">{{ $page }}</a></li>
                                 @endif
                             @endfor
 
-                            {{-- Always Show Last Page if current range doesn't reach the last page --}}
+                            {{-- Last Page --}}
                             @if ($endPage < $lastPage)
                                 @if ($endPage < $lastPage - 1)
                                     <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
                                 @endif
-                                <li class="page-item"><a class="page-link" href="{{ $students->url($lastPage) }}">{{ $lastPage }}</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ $students->appends(request()->query())->url($lastPage) }}">{{ $lastPage }}</a></li>
                             @endif
 
-                            {{-- Next Page Link (>) --}}
+                            {{-- Next Page Link --}}
                             @if ($students->hasMorePages())
-                                <li class="page-item"><a class="page-link" href="{{ $students->nextPageUrl() }}" rel="next">&rsaquo;</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ $students->appends(request()->query())->nextPageUrl() }}" rel="next">&rsaquo;</a></li>
                             @else
                                 <li class="page-item disabled"><span class="page-link">&rsaquo;</span></li>
                             @endif

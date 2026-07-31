@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -56,12 +57,16 @@ Route::post('/action-reset-password', [ForgotPasswordController::class, 'actionR
 // --- ADMIN ONLY ROUTES (ACCESSIBLE ONLY BY ADMIN ROLE) ---
 Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->group(function () {
 
+    // Auto Redirect /admin -> /admin/dashboard
+    Route::redirect('/', '/admin/dashboard');
+
     // Admin Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Contact & Blog Management
+    // Contact, Blog, & User Management Routes
     Route::resource('/contact', ContactController::class);
-    Route::resource('/blog', BlogController::class);
+    Route::resource('/blog', BlogController::class, ['names' => 'admin.blog']);
+    Route::resource('/usermg', UserController::class);
 
     // Student Routes
     Route::get('/student', [StudentController::class, 'index'])->name('student');

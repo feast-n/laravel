@@ -8,12 +8,27 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(5);
-        $title = "Student Table";
-        $students = Student::paginate(5)->onEachSide(1);
-        return view('admin.student', compact('title', 'students'));   
+        $query = Student::query();
+
+        // Filter pencarian berdasarkan Name, Email, Phone, atau Address
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->orWhere('address', 'like', "%{$search}%");
+            });
+        }
+
+        $students = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.student', [
+            'title' => 'Student Management',
+            'students' => $students
+        ]);
     }
 
     public function store(Request $request)
@@ -35,7 +50,7 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'name' => 'required',
@@ -55,7 +70,7 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diperbarui!');
     }
 
-    public function hapus($id)
+    public function hapus(string $id)
     {
         $student = Student::findOrFail($id);
         $student->delete();

@@ -21,10 +21,12 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'   => 'required',
-            'content' => 'required',
-            'date'    => 'required|date',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'title'       => 'required|string|max:255',
+            'sub_content' => 'nullable|string|max:255',
+            'content'     => 'required|string',
+            'date'        => 'required|date',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'is_active'   => 'nullable|boolean',
         ]);
 
         $imagePath = null;
@@ -32,48 +34,59 @@ class BlogController extends Controller
             $imagePath = $request->file('image')->store('blogs', 'public');
         }
 
+        // Jika sub_content diisi maka pakai nilai input, jika kosong gunakan Str::slug(title)
+        $subContent = $request->filled('sub_content')
+            ? $request->sub_content
+            : Str::slug($request->title);
+
         Blog::create([
             'title'       => $request->title,
-            'sub_content' => Str::slug($request->title),
+            'sub_content' => $subContent,
             'content'     => $request->input('content'),
             'date'        => $request->date,
             'image'       => $imagePath,
             'is_active'   => $request->is_active ?? 1,
         ]);
 
-        return redirect()->route('blog.index')->with('success', 'Data blog berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Data blog berhasil ditambahkan!');
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title'   => 'required',
-            'content' => 'required',
-            'date'    => 'required|date',
-            'image'   => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'title'       => 'required|string|max:255',
+            'sub_content' => 'nullable|string|max:255',
+            'content'     => 'required|string',
+            'date'        => 'required|date',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'is_active'   => 'required|boolean',
         ]);
 
         $blog = Blog::findOrFail($id);
         $imagePath = $blog->image;
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
+            // Hapus gambar lama dari storage jika ada
             if ($blog->image && Storage::disk('public')->exists($blog->image)) {
                 Storage::disk('public')->delete($blog->image);
             }
             $imagePath = $request->file('image')->store('blogs', 'public');
         }
 
+        $subContent = $request->filled('sub_content')
+            ? $request->sub_content
+            : Str::slug($request->title);
+
         $blog->update([
             'title'       => $request->title,
-            'sub_content' => Str::slug($request->sub_content),
+            'sub_content' => $subContent,
             'content'     => $request->input('content'),
             'date'        => $request->date,
             'image'       => $imagePath,
             'is_active'   => $request->is_active,
         ]);
 
-        return redirect()->route('blog.index')->with('success', 'Data blog berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Data blog berhasil diperbarui!');
     }
 
     public function destroy(string $id)
@@ -86,6 +99,6 @@ class BlogController extends Controller
 
         $blog->delete();
 
-        return redirect()->route('blog.index')->with('success', 'Data blog berhasil dihapus!');
+        return redirect()->back()->with('success', 'Data blog berhasil dihapus!');
     }
 }

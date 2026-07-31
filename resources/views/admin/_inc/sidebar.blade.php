@@ -40,9 +40,15 @@
                 </a>
             </li>
             <li class="nav-item {{ request()->is('admin/blog*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('blog.index') }}">
+                <a class="nav-link" href="{{ url('/admin/blog') }}">
                     <i class="fas fa-fw fa-blog"></i>
                     <span>Blog</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->is('admin/usermg*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('usermg.index') }}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>User Management</span>
                 </a>
             </li>
 

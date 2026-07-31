@@ -110,7 +110,7 @@
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
 
-                                        <form action="{{ route('blog.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Data akan dihapus?')">
+                                        <form action="{{ route('admin.blog.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Data akan dihapus?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger border-0" title="Hapus">
@@ -136,7 +136,7 @@
 <div class="modal fade" id="AddBlogModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content custom-card shadow-lg">
-            <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.blog.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title font-weight-bold" id="addModalLabel">Tambah Data Blog</h5>
@@ -190,7 +190,7 @@
     <div class="modal fade" id="EditBlogModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content custom-card shadow-lg">
-                <form action="{{ route('blog.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.blog.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-warning text-white">
@@ -216,7 +216,7 @@
                             <label for="image_{{ $item->id }}" class="font-weight-bold small text-uppercase text-muted">Change Image</label>
                             @if($item->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/blogs/' . $item->image) }}" class="rounded border" style="max-height: 80px; width: 120px; object-fit: cover;" alt="Current Image">
+                                    <img src="{{ asset('storage/' . $item->image) }}" class="rounded border" style="max-height: 80px; width: 120px; object-fit: cover;" alt="Current Image">
                                 </div>
                             @endif
                             <input type="file" class="form-control-file" id="image_{{ $item->id }}" name="image" accept="image/*">

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +14,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // <-- Ubah id_role menjadi role di sini!
     ];
 
     protected $hidden = [
@@ -34,5 +34,13 @@ class User extends Authenticatable
     {
         $parts = explode(' ', $this->name, 2);
         return $parts[1] ?? '';
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }
