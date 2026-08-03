@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -12,22 +12,21 @@ class StudentController extends Controller
     {
         $query = Student::query();
 
-        // Filter pencarian berdasarkan Name, Email, Phone, atau Address
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                ->orWhere('phone', 'like', "%{$search}%")
-                ->orWhere('address', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
             });
         }
-
-        $students = $query->latest()->paginate(10)->withQueryString();
+        $perPage = $request->input('per_page', 50);
+        $students = $query->latest()->paginate($perPage)->withQueryString();
 
         return view('admin.student', [
             'title' => 'Student Management',
-            'students' => $students
+            'students' => $students,
         ]);
     }
 

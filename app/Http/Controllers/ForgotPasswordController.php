@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ForgotPasswordController extends Controller
@@ -22,7 +22,7 @@ class ForgotPasswordController extends Controller
         ], [
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            'email.exists' => 'Email ini tidak terdaftar di sistem kami.'
+            'email.exists' => 'Email ini tidak terdaftar di sistem kami.',
         ]);
 
         // Simpan email sementara di session untuk proses reset
@@ -34,11 +34,12 @@ class ForgotPasswordController extends Controller
     // Step 3: Form Input Password Baru
     public function resetPassword()
     {
-        if (!session()->has('reset_email')) {
+        if (! session()->has('reset_email')) {
             return redirect()->route('forgot-password');
         }
 
         $email = session('reset_email');
+
         return view('admin.reset-password', compact('email'));
     }
 
@@ -51,12 +52,12 @@ class ForgotPasswordController extends Controller
         ], [
             'password.required' => 'Password baru wajib diisi.',
             'password.min' => 'Password minimal 6 karakter.',
-            'password_confirmation.same' => 'Konfirmasi password belum sama.'
+            'password_confirmation.same' => 'Konfirmasi password belum sama.',
         ]);
 
         $email = session('reset_email');
 
-        if (!$email) {
+        if (! $email) {
             return redirect()->route('forgot-password');
         }
 

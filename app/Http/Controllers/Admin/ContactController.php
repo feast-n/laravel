@@ -19,16 +19,16 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'    => 'required',
-            'email'   => 'required|email',
+            'name' => 'required',
+            'email' => 'required|email',
             'subject' => 'required',
             'message' => 'required',
         ]);
 
         // Dipanggil langsung tanpa namespace lengkap
         Contact::create([
-            'name'    => $request->name,
-            'email'   => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
         ]);

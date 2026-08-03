@@ -31,9 +31,9 @@ class LoginController extends Controller
             // Get the authenticated user
             $user = Auth::user();
             session([
-                'user_id'   => $user->id,
+                'user_id' => $user->id,
                 'user_name' => $user->name,
-                'role'      => $user->role
+                'role' => $user->role,
             ]);
 
             // Redirect according to role:
@@ -47,7 +47,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah!!'
+            'email' => 'Email atau password salah!!',
         ])->onlyInput('email');
     }
 
@@ -56,6 +56,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 }

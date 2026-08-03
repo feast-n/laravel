@@ -16,7 +16,8 @@ class HomeController extends Controller
 
         return view('home.index', compact('blogs'));
     }
-    public function show(blog $blog)
+
+    public function show(Blog $blog)
     {
         return view('home.detail', compatct('blog'));
 

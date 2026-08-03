@@ -19,7 +19,9 @@ class Blog extends Model
         'image', // <--- ADD THIS TO FILLABLE
         'is_active',
     ];
-    public function getRouteKeyName(){
+
+    public function getRouteKeyName()
+    {
         return 'sub_content';
     }
 }

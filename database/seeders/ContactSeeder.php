@@ -14,18 +14,18 @@ class ContactSeeder extends Seeder
     {
         DB::table('contacts')->insert([
             [
-                'name'       => 'Budi Santoso',
-                'email'      => 'budi@example.com',
-                'subject'    => 'Tanya Informasi',
-                'message'    => 'Halo, saya ingin bertanya mengenai layanan ini.',
+                'name' => 'Budi Santoso',
+                'email' => 'budi@example.com',
+                'subject' => 'Tanya Informasi',
+                'message' => 'Halo, saya ingin bertanya mengenai layanan ini.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name'       => 'Siti Rahma',
-                'email'      => 'siti@example.com',
-                'subject'    => 'Laporan Kendala',
-                'message'    => 'Ada kendala saat saya mencoba login tadi pagi.',
+                'name' => 'Siti Rahma',
+                'email' => 'siti@example.com',
+                'subject' => 'Laporan Kendala',
+                'message' => 'Ada kendala saat saya mencoba login tadi pagi.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

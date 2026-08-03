@@ -21,12 +21,12 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'sub_content' => 'nullable|string|max:255',
-            'content'     => 'required|string',
-            'date'        => 'required|date',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'is_active'   => 'nullable|boolean',
+            'content' => 'required|string',
+            'date' => 'required|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $imagePath = null;
@@ -40,12 +40,12 @@ class BlogController extends Controller
             : Str::slug($request->title);
 
         Blog::create([
-            'title'       => $request->title,
+            'title' => $request->title,
             'sub_content' => $subContent,
-            'content'     => $request->input('content'),
-            'date'        => $request->date,
-            'image'       => $imagePath,
-            'is_active'   => $request->is_active ?? 1,
+            'content' => $request->input('content'),
+            'date' => $request->date,
+            'image' => $imagePath,
+            'is_active' => $request->is_active ?? 1,
         ]);
 
         return redirect()->back()->with('success', 'Data blog berhasil ditambahkan!');
@@ -54,12 +54,12 @@ class BlogController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'sub_content' => 'nullable|string|max:255',
-            'content'     => 'required|string',
-            'date'        => 'required|date',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'is_active'   => 'required|boolean',
+            'content' => 'required|string',
+            'date' => 'required|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'is_active' => 'required|boolean',
         ]);
 
         $blog = Blog::findOrFail($id);
@@ -78,12 +78,12 @@ class BlogController extends Controller
             : Str::slug($request->title);
 
         $blog->update([
-            'title'       => $request->title,
+            'title' => $request->title,
             'sub_content' => $subContent,
-            'content'     => $request->input('content'),
-            'date'        => $request->date,
-            'image'       => $imagePath,
-            'is_active'   => $request->is_active,
+            'content' => $request->input('content'),
+            'date' => $request->date,
+            'image' => $imagePath,
+            'is_active' => $request->is_active,
         ]);
 
         return redirect()->back()->with('success', 'Data blog berhasil diperbarui!');

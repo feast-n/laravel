@@ -86,7 +86,7 @@
         <div class="card-body p-3 bg-light">
             <form action="{{ url('admin/student') }}" method="GET">
                 <div class="row align-items-center">
-                    <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="col-md-5 mb-2 mb-md-0">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-right-0"><i class="fas fa-search text-muted"></i></span>
@@ -94,11 +94,24 @@
                             <input type="text" name="search" class="form-control border-left-0" placeholder="Cari nama, email, telepon, atau alamat..." value="{{ request('search') }}">
                         </div>
                     </div>
-                    <div class="col-md-6 d-flex justify-content-md-end">
+                    <div class="col-md-7 d-flex justify-content-md-end align-items-center">
+                        <!-- Dropdown Options for Per Page (5, 10, 25, 50, 100, 250) -->
+                        <div class="d-flex align-items-center mr-3">
+                            <label for="per_page" class="mr-2 mb-0 font-weight-bold text-muted small">Tampilkan:</label>
+                            <select name="per_page" id="per_page" class="custom-select custom-select-sm" style="width: auto;" onchange="this.form.submit()">
+                                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page', 50) == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                                <option value="250" {{ request('per_page') == 250 ? 'selected' : '' }}>250</option>
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-secondary mr-2">
                             <i class="fas fa-filter fa-sm"></i> Filter
                         </button>
-                        @if(request('search'))
+                        @if(request('search') || request('per_page'))
                             <a href="{{ url('admin/student') }}" class="btn btn-outline-danger">
                                 <i class="fas fa-undo fa-sm"></i> Reset
                             </a>

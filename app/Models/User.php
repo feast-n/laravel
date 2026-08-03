@@ -26,6 +26,7 @@ class User extends Authenticatable
     public function getFnameAttribute()
     {
         $parts = explode(' ', $this->name, 2);
+
         return $parts[0] ?? '';
     }
 
@@ -33,6 +34,7 @@ class User extends Authenticatable
     public function getLnameAttribute()
     {
         $parts = explode(' ', $this->name, 2);
+
         return $parts[1] ?? '';
     }
 

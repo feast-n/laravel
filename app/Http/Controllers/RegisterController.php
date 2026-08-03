@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -22,8 +21,8 @@ class RegisterController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $user = new User();
-        $user->name = trim($request->fname . ' ' . $request->lname);
+        $user = new User;
+        $user->name = trim($request->fname.' '.$request->lname);
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->role = 'user';
