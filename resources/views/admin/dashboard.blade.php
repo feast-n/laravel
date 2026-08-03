@@ -15,50 +15,63 @@
     </div>
 
 @if(session('role') === 'admin')
+    <!-- Management Quick Cards -->
     <div class="row mb-4">
         <!-- Student Management -->
-        <div class="col-md-3 col-sm-6 mb-3">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
             <a href="{{ route('student') }}" class="text-decoration-none">
                 <div class="card text-white text-center bg-primary pt-3 shadow h-100">
                     <i class="fas fa-user-graduate fa-3x"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Student Management</h5>
+                        <h5 class="card-title font-weight-bold">Student Management</h5>
                     </div>
                 </div>
             </a>
         </div>
 
         <!-- Contact Management -->
-        <div class="col-md-3 col-sm-6 mb-3">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
             <a href="{{ route('contact.index') }}" class="text-decoration-none">
                 <div class="card text-white text-center bg-primary pt-3 shadow h-100">
                     <i class="fas fa-address-book fa-3x"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Contact Management</h5>
+                        <h5 class="card-title font-weight-bold">Contact Management</h5>
                     </div>
                 </div>
             </a>
         </div>
 
         <!-- Blog Management -->
-        <div class="col-md-3 col-sm-6 mb-3">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
             <a href="{{ route('blog.index') }}" class="text-decoration-none">
                 <div class="card text-white text-center bg-primary pt-3 shadow h-100">
                     <i class="fas fa-blog fa-3x"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Blog Management</h5>
+                        <h5 class="card-title font-weight-bold">Blog Management</h5>
                     </div>
                 </div>
             </a>
         </div>
 
         <!-- User Management -->
-        <div class="col-md-3 col-sm-6 mb-3">
+        <div class="col-lg-6 col-md-6 col-sm-6 mb-3">
             <a href="{{ route('usermg.index') }}" class="text-decoration-none">
                 <div class="card text-white text-center bg-primary pt-3 shadow h-100">
                     <i class="fas fa-users fa-3x"></i>
                     <div class="card-body">
-                        <h5 class="card-title">User Management</h5>
+                        <h5 class="card-title font-weight-bold">User Management</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Mapel Management (Baru) -->
+        <div class="col-lg-6 col-md-6 col-sm-6 mb-3">
+            <a href="{{ route('mapel.index') }}" class="text-decoration-none">
+                <div class="card text-white text-center bg-primary pt-3 shadow h-100">
+                    <i class="fas fa-book fa-3x"></i>
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Mapel Management</h5>
                     </div>
                 </div>
             </a>

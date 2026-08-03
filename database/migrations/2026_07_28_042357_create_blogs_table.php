@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('sub_content')->nullable();
             $table->text('content');
+            $table->string('author')->nullable();
             $table->date('date');
             $table->string('image')->nullable();
             $table->boolean('is_active')->nullable()->default(1);

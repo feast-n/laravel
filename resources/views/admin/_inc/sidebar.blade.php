@@ -51,6 +51,12 @@
                     <span>User Management</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->is('admin/mapel*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('mapel.index') }}">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Mapel Management</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

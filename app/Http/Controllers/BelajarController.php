@@ -25,7 +25,6 @@ class BelajarController extends Controller
     {
         $angka1 = $request->input('angka1');
         $angka2 = $request->input('angka2');
-
         $jumlah = $angka1 + $angka2;
         $title = 'Data Penjumlahan';
 
@@ -44,9 +43,7 @@ class BelajarController extends Controller
     {
         $angka1 = $request->input('angka1');
         $angka2 = $request->input('angka2');
-
         $jumlah = ($angka1 - $angka2);
-        // $jumlah = max(0, $angka1 - $angka2);
         $title = 'Data Pengurangan';
 
         return view('kurang', compact('jumlah', 'title'));
@@ -64,7 +61,6 @@ class BelajarController extends Controller
     {
         $angka1 = $request->input('angka1');
         $angka2 = $request->input('angka2');
-
         $jumlah = ($angka1 * $angka2);
         $title = 'Data Perkalian';
 
@@ -83,13 +79,7 @@ class BelajarController extends Controller
     {
         $angka1 = $request->input('angka1');
         $angka2 = $request->input('angka2');
-
-        if ($angka2 == 0 || $angka2 == null) {
-            $jumlah = 0;
-        } else {
-            $jumlah = $angka1 / $angka2;
-        }
-        // $jumlah = max(0, $angka1 / $angka2);
+        $jumlah = ($angka2 == 0 || $angka2 == null) ? 0 : $angka1 / $angka2;
         $title = 'Data Pembagian';
 
         return view('bagi', compact('jumlah', 'title'));

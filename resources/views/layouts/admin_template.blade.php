@@ -10,8 +10,8 @@
     <!-- Custom fonts for this template-->
     <link href="{{ asset('asset_admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href ="{{ asset('asset_admin/css/datatables.css') }}" rel="stylesheet">
-    <link href ="{{ asset('asset_admin/css/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset_admin/css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset_admin/css/datatables.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('asset_admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -60,31 +60,17 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('asset_admin/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('asset_admin/js/datatables.js') }}"></script>
     <script src="{{ asset('asset_admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('asset_admin/js/datatables.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('asset_admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('asset_admin/js/sb-admin-2.min.js') }}"></script>
-    <script>
-        $.fn.dataTable.ext.errMode = 'none';
 
-        $(document).ready(function() {
-            if ($('#student').length) {
-                new DataTable('#student', {
-                    fixedHeader: true,
-                    responsive: true,
-                    paging: false,
-                    searching: false,
-                    ordering: true,
-                    info: false
-                });
-            }
-        });
-    </script>
+    <!-- Client-side PDF Generation Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
 </body>
 

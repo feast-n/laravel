@@ -12,7 +12,8 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        // FIX: Tambahkan ->query() setelah Blog::
+        $blogs = Blog::query()->latest()->get();
         $title = 'Data Blog';
 
         return view('admin.blog.index', compact('blogs', 'title'));
@@ -20,71 +21,26 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'sub_content' => 'nullable|string|max:255',
-            'content' => 'required|string',
-            'date' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'is_active' => 'nullable|boolean',
-        ]);
+        $request->validate(['title' => 'required|string|max:255', 'sub_content' => 'nullable|string|max:255', 'content' => 'required|string', 'date' => 'required|date', 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', 'is_active' => 'nullable|boolean']);
+        $imagePath = $request->hasFile('image') ? $request->file('image')->store('blogs', 'public') : null;
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('blogs', 'public');
-        }
-
-        // Jika sub_content diisi maka pakai nilai input, jika kosong gunakan Str::slug(title)
-        $subContent = $request->filled('sub_content')
-            ? $request->sub_content
-            : Str::slug($request->title);
-
-        Blog::create([
-            'title' => $request->title,
-            'sub_content' => $subContent,
-            'content' => $request->input('content'),
-            'date' => $request->date,
-            'image' => $imagePath,
-            'is_active' => $request->is_active ?? 1,
-        ]);
+        Blog::create(['title' => $request->title, 'sub_content' => $request->filled('sub_content') ? $request->sub_content : Str::slug($request->title), 'content' => $request->input('content'), 'date' => $request->date, 'image' => $imagePath, 'is_active' => $request->is_active ?? 1]);
 
         return redirect()->back()->with('success', 'Data blog berhasil ditambahkan!');
     }
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'sub_content' => 'nullable|string|max:255',
-            'content' => 'required|string',
-            'date' => 'required|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'is_active' => 'required|boolean',
-        ]);
-
+        $request->validate(['title' => 'required|string|max:255', 'sub_content' => 'nullable|string|max:255', 'content' => 'required|string', 'date' => 'required|date', 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', 'is_active' => 'required|boolean']);
         $blog = Blog::findOrFail($id);
         $imagePath = $blog->image;
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama dari storage jika ada
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
-            }
+            if ($blog->image && Storage::disk('public')->exists($blog->image)) { Storage::disk('public')->delete($blog->image); }
             $imagePath = $request->file('image')->store('blogs', 'public');
         }
 
-        $subContent = $request->filled('sub_content')
-            ? $request->sub_content
-            : Str::slug($request->title);
-
-        $blog->update([
-            'title' => $request->title,
-            'sub_content' => $subContent,
-            'content' => $request->input('content'),
-            'date' => $request->date,
-            'image' => $imagePath,
-            'is_active' => $request->is_active,
-        ]);
+        $blog->update(['title' => $request->title, 'sub_content' => $request->filled('sub_content') ? $request->sub_content : Str::slug($request->title), 'content' => $request->input('content'), 'date' => $request->date, 'image' => $imagePath, 'is_active' => $request->is_active]);
 
         return redirect()->back()->with('success', 'Data blog berhasil diperbarui!');
     }
@@ -93,10 +49,7 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
 
-        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-            Storage::disk('public')->delete($blog->image);
-        }
-
+        if ($blog->image && Storage::disk('public')->exists($blog->image)) { Storage::disk('public')->delete($blog->image); }
         $blog->delete();
 
         return redirect()->back()->with('success', 'Data blog berhasil dihapus!');

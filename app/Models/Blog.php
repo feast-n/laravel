@@ -15,6 +15,7 @@ class Blog extends Model
         'title',
         'sub_content',
         'content',
+        'author',
         'date',
         'image', // <--- ADD THIS TO FILLABLE
         'is_active',
