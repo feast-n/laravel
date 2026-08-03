@@ -14,20 +14,57 @@
         @endif
     </div>
 
-    @if(session('role') === 'admin')
+@if(session('role') === 'admin')
     <div class="row mb-4">
-        <div class="col-md-4">
+        <!-- Student Management -->
+        <div class="col-md-3 col-sm-6 mb-3">
             <a href="{{ route('student') }}" class="text-decoration-none">
-                <div class="card text-white text-center bg-primary pt-3 mb-3 shadow">
-                    <i class="fa-solid fa-user-graduate fa-3x"></i>
+                <div class="card text-white text-center bg-primary pt-3 shadow h-100">
+                    <i class="fas fa-user-graduate fa-3x"></i>
                     <div class="card-body">
                         <h5 class="card-title">Student Management</h5>
                     </div>
                 </div>
             </a>
         </div>
+
+        <!-- Contact Management -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <a href="{{ route('contact.index') }}" class="text-decoration-none">
+                <div class="card text-white text-center bg-primary pt-3 shadow h-100">
+                    <i class="fas fa-address-book fa-3x"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Contact Management</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Blog Management -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <a href="{{ route('blog.index') }}" class="text-decoration-none">
+                <div class="card text-white text-center bg-primary pt-3 shadow h-100">
+                    <i class="fas fa-blog fa-3x"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Blog Management</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- User Management -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <a href="{{ route('usermg.index') }}" class="text-decoration-none">
+                <div class="card text-white text-center bg-primary pt-3 shadow h-100">
+                    <i class="fas fa-users fa-3x"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">User Management</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
-    @endif
+@endif
 
     <!-- Content Row - Cards Summary -->
     <div class="row">
